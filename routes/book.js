@@ -109,6 +109,44 @@ route.get("/books/:categoryName", async (req, res) => {
     }
 })
 
+// Delete the book by id      >>>>     id of the book is required
+route.delete("/delete/:bookId", async (req, res) => {
+    try {
+        const book = await Book.findByIdAndDelete(req.params.bookId);
+
+        res.status(200).json({ success: true, message: `This book has been deleted` })
+
+    }catch (err) {
+        console.log(err)
+        res.status(500).json({ success: false, message: `error on deleting this book` })
+    }
+})
+
+
+// Updating the book        >>>>>>  id of the book is required
+route.put("/update/:bookId", upload.fields([
+    { name: 'bookImage', maxCount: 1 },
+    { name: 'bookFile', maxCount: 1 }]), async (req, res) => {
+        try {
+            const book = await Book.findByIdAndUpdate(req.params.bookId, {...req.body});
+
+            // Adding the name of the image in the data base
+            let imagePathLink = "http://localhost:4000/images/";
+            book.cover = imagePathLink + req.files.bookImage[0].originalname;
+
+            // Adding the name of the book in the data base
+            let filePathLink = "http://localhost:4000/files/"
+            book.link = filePathLink + req.files.bookFile[0].originalname
+
+            book.save();
+
+            res.status(200).json({ success: true, message: "This book has been updated" });
+        }catch (err) {
+            console.log(err);
+        res.status(500).json({ success: false, message: `error on updating this book` });
+        }
+    })
+
 
 
 module.exports = route;
