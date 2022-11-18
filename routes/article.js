@@ -77,10 +77,43 @@ route.get("/articles/:categoryName", async (req, res) => {
         const article = await Article.find({categoryName: req.params.categoryName});
 
         res.status(200).json({ success: true, message: `You got all the articles of ${req.params.categoryName}` , data: article})
-
+        
     }catch (err) {
         console.log(err)
         res.status(500).json({ success: false, message: `error on getting the articles of ${req.params.categoryName}` })
+    }
+})
+
+// Delete article by id       >>>>>>  the id of the article is required
+route.delete("/delete/:articleId", async (req, res) => {
+    try {
+        const article = await Article.findByIdAndDelete(req.params.articleId);
+
+        res.status(200).json({ success: true, message: `The article has been deleted`})
+    }catch (err) {
+        console.log(err)
+        res.status(500).json({ success: false, message: `error on deleting this article` })
+    }
+})
+
+
+// update the article       >>>>>>  the id of the article is required
+route.put("/update/:articleId", upload.array("articleImages", 5), async (req, res) => {
+    try {
+        const article = await Article.findByIdAndUpdate(req.params.articleId, {...req.body});
+        // Adding the name of the images in the data base
+        let pathLink = "http://localhost:4000/images/"
+        let arr = []
+        for (let image of req.files) {
+            arr.push(pathLink + image.originalname)
+        }
+        article.cover = arr;
+        article.save();
+
+        res.status(200).json({ success: true, message: `The article has been updated`})
+    }catch (err) {
+        console.log(err)
+        res.status(500).json({ success: false, message: `error on updating this article` })
     }
 })
 

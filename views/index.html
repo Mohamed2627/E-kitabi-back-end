@@ -21,6 +21,17 @@
             </form>
         </div> -->
 
+        <!-- Update the article -->
+        <div class="admin__upload-file">
+            <form action="http://localhost:4000/article/update/6377c3b2f2adfc3ecc1d006c" enctype="multipart/form-data" method="post">
+                <input type="file" id="jobImage" name="articleImages" multiple/>
+                <input type="text" placeholder="title" id="myFile" name="title"/>
+                <input type="text" placeholder="text" id="myFile" name="text"/>
+                <input type="text" placeholder="categoryName" id="myFile" name="categoryName"/>
+                <input class="admin__submit" type="submit" />
+            </form>
+        </div>
+
         <!-- The article categories -->
         <!-- <div class="admin__upload-file">
             <form action="http://localhost:4000/articlecate/newcategory" enctype="multipart/form-data" method="post">
@@ -43,13 +54,13 @@
         </div> -->
 
         <!-- The book categories -->
-        <div class="admin__upload-file">
+        <!-- <div class="admin__upload-file">
             <form action="http://localhost:4000/bookcate/newcategory" enctype="multipart/form-data" method="post">
                 <input type="file" id="jobImage" name="categoryImage"/>
                 <input type="text" placeholder="title" id="myFile" name="title"/>
                 <input class="admin__submit" type="submit" />
             </form>
-        </div>
+        </div> -->
 
         <div>
             <img src="http://localhost:4000/images/IMG_20191114_155650.jpg" alt="Bolla" style="width: 400px; height:300px">

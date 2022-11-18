@@ -97,7 +97,7 @@ route.get("/all", async (req, res) => {
 
 
 // Getting the books by category name
-route.get("/articles/:categoryName", async (req, res) => {
+route.get("/books/:categoryName", async (req, res) => {
     try {
         const book = await Book.find({ categoryName: req.params.categoryName });
 
