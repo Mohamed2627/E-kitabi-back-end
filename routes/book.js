@@ -96,6 +96,36 @@ route.get("/all", async (req, res) => {
 })
 
 
+// Searching by the title of the book
+route.get("/search/:input", async (req, res) => {
+
+    try {
+        const allBooks = await Book.find({})
+
+        const searchResult = allBooks.filter((book) => book.title.includes(req.params.input))
+
+        res.status(200).json({ success: true, message: "You got your search results", data: searchResult})
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ success: false, message: "error on getting your search results" })
+    }
+})
+
+
+// Getting Book by id     >>>>> id of the book is required
+route.get("/getbyid/:bookId", async (req, res) => {
+
+    try {
+        const book = await Book.findById(req.params.bookId)
+
+        res.status(200).json({ success: true, message: "You got the book by id", data: book})
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ success: false, message: "error on getting this book by id" })
+    }
+})
+
+
 // Getting the books by category name
 route.get("/books/:categoryName", async (req, res) => {
     try {

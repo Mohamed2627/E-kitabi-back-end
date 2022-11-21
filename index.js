@@ -12,7 +12,9 @@ const connect = require("./config/connection");
 const article = require("./routes/article");
 const articleCategory = require("./routes/articleCategory");
 const book = require("./routes/book");
-const bookCategory = require("./routes/bookCategory")
+const bookCategory = require("./routes/bookCategory");
+const admin = require("./routes/admin");
+
 
 // creating the server
 const app = express();
@@ -44,6 +46,7 @@ app.use("/article", article);
 app.use("/articlecate", articleCategory);
 app.use("/book", book);
 app.use("/bookcate", bookCategory);
+app.use("/admin", admin);
 
 
 

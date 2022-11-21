@@ -71,6 +71,36 @@ route.get("/all", async (req, res) => {
 })
 
 
+// Searching by the title of the article
+route.get("/search/:input", async (req, res) => {
+
+    try {
+        const allArticles = await Article.find({})
+
+        const searchResult = allArticles.filter((article) => article.title.includes(req.params.input))
+
+        res.status(200).json({ success: true, message: "You got your search results", data: searchResult})
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ success: false, message: "error on getting your search results" })
+    }
+})
+
+
+// Getting article by id     >>>>> id of the article is required
+route.get("/getbyid/:articleId", async (req, res) => {
+
+    try {
+        const article = await Article.findById(req.params.articleId)
+
+        res.status(200).json({ success: true, message: "You got the article by id", data: article})
+    } catch (err) {
+        console.log(err)
+        res.status(500).json({ success: false, message: "error on getting this article by id" })
+    }
+})
+
+
 // Getting the articles by category name
 route.get("/articles/:categoryName", async (req, res) => {
     try {
@@ -116,6 +146,9 @@ route.put("/update/:articleId", upload.array("articleImages", 5), async (req, re
         res.status(500).json({ success: false, message: `error on updating this article` })
     }
 })
+
+
+
 
 
 
