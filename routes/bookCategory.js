@@ -3,6 +3,7 @@ const route = require("express").Router();
 
 // import multer
 const multer = require('multer');
+const book = require("../models/book");
 
 // import models
 const Category = require('../models/bookCategory');
@@ -66,6 +67,24 @@ route.get("/all", async (req, res) => {
     } catch (err) {
         console.log(err)
         res.status(500).json({ success: false, message: "error on getting all the categories" })
+    }
+})
+
+
+// Deleting category and all its books      >>> id of category is required
+route.delete("/delete/:categoryId", async (req, res) => {
+    try {
+        // Getting that category
+        const category = await Category.findById(req.params.categoryId);
+        // Deleting the books of this category
+        const deletedBooks = await book.deleteMany({categoryName: category.title});
+        // Deleting the category itself
+        const deletedCategory = await Category.findByIdAndDelete(req.params.categoryId);
+        
+        res.status(200).json({ success: true, message: "This category and its books have been deleted" })
+    }catch (err) {
+        console.log(err)
+        res.status(500).json({ success: false, message: "error on deleting this category" })
     }
 })
 

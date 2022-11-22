@@ -6,6 +6,7 @@ const multer = require('multer');
 
 // import models
 const Category = require('../models/articleCategory');
+const Article = require('../models/article');
 
 
 // storage
@@ -66,6 +67,24 @@ route.get("/all", async (req, res) => {
     } catch (err) {
         console.log(err)
         res.status(500).json({ success: false, message: "error on getting all the categories" })
+    }
+})
+
+
+// Deleting category and all its articles      >>> id of category is required
+route.delete("/delete/:categoryId", async (req, res) => {
+    try {
+        // Getting that category
+        const category = await Category.findById(req.params.categoryId);
+        // Deleting the articles of this category
+        const deletedArticles = await Article.deleteMany({categoryName: category.title});
+        // Deleting the category itself
+        const deletedCategory = await Category.findByIdAndDelete(req.params.categoryId);
+        
+        res.status(200).json({ success: true, message: "This category and its articles have been deleted" })
+    }catch (err) {
+        console.log(err)
+        res.status(500).json({ success: false, message: "error on deleting this category" })
     }
 })
 

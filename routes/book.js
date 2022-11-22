@@ -96,6 +96,22 @@ route.get("/all", async (req, res) => {
 })
 
 
+// Pagination          .>>>>>>>  pageNumber is required
+route.get("/paginate/:pageNumber", async (req, res) => {
+    try {
+        const pageNumber = Number(req.params.pageNumber);
+        const allBooks = await Book.find({});
+        const noOfPages = Math.ceil(allBooks.length / 10);
+        const paginatedData = allBooks.slice((pageNumber - 1)*10, (pageNumber + 1)*10)
+
+        res.status(200).json({ success: true, message: "You got your pagination results", data: {paginatedData, noOfPages, pageNumber}})
+    }catch (err) {
+        console.log(err)
+        res.status(500).json({ success: false, message: "error on getting this paginated page number" })
+    }
+})
+
+
 // Searching by the title of the book
 route.get("/search/:input", async (req, res) => {
 

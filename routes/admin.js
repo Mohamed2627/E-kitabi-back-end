@@ -12,7 +12,7 @@ const Admin = require("../models/admin");
 route.post("/login", async (req, res) => {
     try {
         const body = req.body;
-        // // When creating the admin@gmai.com for the first time   (Must be deleted on production)
+        // When creating the admin@gmai.com for the first time   (Must be deleted on production)
         // const cryptedPassword = await bcrypt.hash(body.password, 10);
         // const token = jwt.sign({ email: body.email }, "secret_key");
         // const admin = await Admin.create({ ...body, password: cryptedPassword, token: token });
@@ -44,15 +44,17 @@ route.post("/login", async (req, res) => {
 
 
 // update           token is required
-route.put("update", async (req, res) => {
+route.put("/update", async (req, res) => {
     try {
         // get the current admin with token
         const currentToken = req.headers.authorization;
-        const admin = await Admin.findOneAndUpdate({ token: currentToken }, {...req.body});
+        const cryptedPassword = await bcrypt.hash(req.body.password, 10);
+        const token = jwt.sign({ email: req.body.email }, "secret_key");
+        const admin = await Admin.findOneAndUpdate({ token: currentToken }, {...req.body, password: cryptedPassword, token: token});
         res.status(200).json({ sucsess: true, message: "The account has been updated" });
     }catch (err) {
         console.log(err)
-        res.status(500).json({ success: false, message: `There is wrong in email or password ` });
+        res.status(500).json({ success: false, message: `There is error on updating this account` });
     }
 })
 
