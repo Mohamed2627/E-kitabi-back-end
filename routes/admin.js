@@ -43,6 +43,18 @@ route.post("/login", async (req, res) => {
 })
 
 
+// Get user by id
+route.get("/user/:userId", async (req, res) => {
+    try {
+        const admin = await Admin.findById(req.params.userId);
+
+        res.status(200).json({ sucsess: true, message: "You got the data of the user", data:  admin});
+    }catch (err) {
+        console.log(err)
+        res.status(500).json({ success: false, message: `There is wrong on getting this user by Id ` });
+    }
+})
+
 // update           token is required
 route.put("/update", async (req, res) => {
     try {

@@ -7,6 +7,9 @@ const article = mongoose.Schema({
     text: {
         type: String
     },
+    description: {
+        type: String
+    },
     categoryName: {
         type: String
     },
