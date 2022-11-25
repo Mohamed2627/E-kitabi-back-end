@@ -16,6 +16,12 @@ const book = mongoose.Schema({
     link: {
         type: String
     },
+    outerLinks: [{
+        type: Object
+    }],
+    innerLinks: [{
+        type: Object
+    }],
     cover: {
         type: String
     }

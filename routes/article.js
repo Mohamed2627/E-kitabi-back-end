@@ -93,7 +93,7 @@ route.get("/paginate/:pageNumber", async (req, res) => {
         const pageNumber = Number(req.params.pageNumber);
         const allArticles = await Article.find({});
         const noOfPages = Math.ceil(allArticles.length / 10);
-        const paginatedData = allArticles.slice((pageNumber - 1)*10, (pageNumber + 1)*10)
+        const paginatedData = allArticles.slice((pageNumber - 1)*10, (pageNumber)*10)
 
         res.status(200).json({ success: true, message: "You got your pagination results", data: {paginatedData, noOfPages, pageNumber}})
     }catch (err) {
