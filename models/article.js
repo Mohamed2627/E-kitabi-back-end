@@ -19,6 +19,9 @@ const article = mongoose.Schema({
     links: [{
         type: Object
     }],
+    innerLinks: [{
+        type: Object
+    }],
     cover: [{
         type: String
     }]
