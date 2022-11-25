@@ -13,12 +13,12 @@ const article = mongoose.Schema({
     categoryName: {
         type: String
     },
-    keywords: {
-        type: Array
-    },
-    links: {
-        type: Array
-    },
+    keywords: [{
+        type: String
+    }],
+    links: [{
+        type: Object
+    }],
     cover: [{
         type: String
     }]
