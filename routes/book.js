@@ -112,13 +112,13 @@ route.get("/paginate/:pageNumber", async (req, res) => {
 })
 
 
-// Searching by the title of the book
-route.get("/search/:input", async (req, res) => {
+// Searching by the title of the book>>>>>>> {title: ""} is required
+route.get("/search", async (req, res) => {
 
     try {
         const allBooks = await Book.find({})
 
-        const searchResult = allBooks.filter((book) => book.title.includes(req.params.input))
+        const searchResult = allBooks.filter((book) => book.title.includes(req.body.title))
 
         res.status(200).json({ success: true, message: "You got your search results", data: searchResult})
     } catch (err) {

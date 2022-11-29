@@ -71,13 +71,13 @@ route.get("/all", async (req, res) => {
 })
 
 
-// Searching by the title of the article
-route.get("/search/:input", async (req, res) => {
+// Searching by the title of the article>>>>>>> {title: ""} is required
+route.get("/search", async (req, res) => {
 
     try {
         const allArticles = await Article.find({})
 
-        const searchResult = allArticles.filter((article) => article.title.includes(req.params.input))
+        const searchResult = allArticles.filter((article) => article.title.includes(req.body.title))
 
         res.status(200).json({ success: true, message: "You got your search results", data: searchResult})
     } catch (err) {
